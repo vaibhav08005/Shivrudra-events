@@ -43,6 +43,8 @@ const Contact: React.FC = () => {
       });
 
       const result = await response.json();
+      
+      console.log('Web3Forms Response:', result); // Debug log
 
       if (result.success) {
         setStatus({ 
@@ -51,13 +53,20 @@ const Contact: React.FC = () => {
         });
         setFormState({ name: '', email: '', phone: '', service: 'Wedding Photography', date: '', message: '' });
       } else {
-        throw new Error(result.message || 'Failed to send');
+        console.error('Web3Forms error:', result);
+        // Show specific error message from Web3Forms
+        let errorMsg = result.message || 'Failed to send';
+        if (errorMsg.includes('not allowed')) {
+          errorMsg = 'Email service not activated. Please verify your Web3Forms access key via email.';
+        }
+        throw new Error(errorMsg);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Form submission error:', error);
+      const errorMessage = error?.message || 'Failed to send inquiry. Please try again or contact us directly.';
       setStatus({ 
         type: 'error', 
-        message: 'Failed to send inquiry. Please try again or contact us directly.' 
+        message: errorMessage
       });
     } finally {
       setSubmitted(false);
