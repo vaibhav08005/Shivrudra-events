@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { Phone, MapPin, Mail, Instagram, Facebook, CheckCircle, AlertCircle } from 'lucide-react';
-import emailjs from '@emailjs/browser';
-import { EMAILJS_CONFIG, RECIPIENT_EMAIL } from '../emailjs.config';
+import { WEB3FORMS_CONFIG } from '../web3forms.config';
 
 const Contact: React.FC = () => {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
     phone: '',
-    service: 'Wedding',
+    service: 'Wedding Photography',
     date: '',
     message: ''
   });
@@ -21,40 +20,41 @@ const Contact: React.FC = () => {
     setStatus({ type: null, message: '' });
 
     try {
-      // EmailJS configuration
-      const serviceID = EMAILJS_CONFIG.serviceID;
-      const templateID = EMAILJS_CONFIG.templateID;
-      const publicKey = EMAILJS_CONFIG.publicKey;
+      // Web3Forms Access Key - Get your free key at https://web3forms.com
+      const accessKey = WEB3FORMS_CONFIG.accessKey;
+      
+      // Prepare form data
+      const formData = new FormData();
+      formData.append('access_key', accessKey);
+      formData.append('name', formState.name);
+      formData.append('email', formState.email);
+      formData.append('phone', formState.phone);
+      formData.append('service', formState.service);
+      formData.append('date', formState.date);
+      formData.append('message', formState.message);
+      formData.append('subject', `New Inquiry from ${formState.name} - Nanded Snaps Studio`);
+      formData.append('from_name', 'Nanded Snaps Studio Contact Form');
+      formData.append('to_email', WEB3FORMS_CONFIG.recipientEmail);
 
-      // Prepare email parameters
-      const templateParams = {
-        to_email: RECIPIENT_EMAIL,
-        from_name: formState.name,
-        from_email: formState.email,
-        phone: formState.phone,
-        service: formState.service,
-        date: formState.date,
-        message: formState.message,
-        reply_to: formState.email
-      };
+      // Send to Web3Forms
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
 
-      // Send email using EmailJS
-      const response = await emailjs.send(
-        serviceID,
-        templateID,
-        templateParams,
-        publicKey
-      );
+      const result = await response.json();
 
-      if (response.status === 200) {
+      if (result.success) {
         setStatus({ 
           type: 'success', 
           message: 'Thanks for your inquiry! We will contact you shortly.' 
         });
-        setFormState({ name: '', email: '', phone: '', service: 'Wedding', date: '', message: '' });
+        setFormState({ name: '', email: '', phone: '', service: 'Wedding Photography', date: '', message: '' });
+      } else {
+        throw new Error(result.message || 'Failed to send');
       }
     } catch (error) {
-      console.error('Email send error:', error);
+      console.error('Form submission error:', error);
       setStatus({ 
         type: 'error', 
         message: 'Failed to send inquiry. Please try again or contact us directly.' 
