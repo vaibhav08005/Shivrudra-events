@@ -31,7 +31,7 @@ const Hero: React.FC = () => {
           loop
           muted
           playsInline
-          className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover opacity-60"
+          className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover opacity-80"
           style={{
             transform: `translate(-50%, -50%) translateY(${offset * 0.3}px) scale(${1 + offset * 0.0003})`,
           }}
@@ -42,8 +42,8 @@ const Hero: React.FC = () => {
         </video>
       </div>
       
-      {/* Dark overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30 z-[1]" />
+      {/* Lighter overlay for better video visibility */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-[1]" />
       
       {/* Mute/Unmute Button */}
       <button
@@ -58,33 +58,22 @@ const Hero: React.FC = () => {
         )}
       </button>
 
-      {/* Main Typography */}
+      {/* Main Typography - Minimal Design */}
       <div className="relative z-20 text-center flex flex-col items-center w-full px-4">
-        <h2
-          className="text-brand-accent font-sans text-sm md:text-lg uppercase tracking-[0.3em] mb-4 opacity-0 animate-[fadeIn_1s_ease-out_0.5s_forwards]"
-        >
-          Capture Your Moments in Nanded
-        </h2>
-
-        {/* Replicating the big condensed font from the video */}
-        <h1 className="font-mega text-6xl md:text-9xl lg:text-[12rem] leading-none uppercase text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 tracking-tighter drop-shadow-2xl opacity-0 animate-[slideUp_1s_ease-out_forwards]">
+        {/* Simple, large title */}
+        <h1 className="font-mega text-7xl md:text-9xl lg:text-[10rem] leading-none uppercase text-white tracking-tighter drop-shadow-2xl opacity-0 animate-[slideUp_1s_ease-out_forwards]">
           Nanded Snaps
         </h1>
-        <h1 className="font-mega text-6xl md:text-9xl lg:text-[12rem] leading-none uppercase text-white/10 tracking-tighter mt-[-10px] md:mt-[-30px] lg:mt-[-50px] opacity-0 animate-[slideUp_1s_ease-out_0.2s_forwards]">
-          Studio
-        </h1>
 
-        <p className="max-w-xl text-gray-400 text-center mt-8 font-light text-sm md:text-base opacity-0 animate-[fadeIn_1s_ease-out_0.8s_forwards]">
-          Local experts in portrait, wedding, and event photography in Shivaji Nagar.
-          Transforming visions into reality since 2015.
+        {/* Minimal tagline */}
+        <p className="text-gray-300 text-center mt-6 font-light text-lg md:text-xl opacity-0 animate-[fadeIn_1s_ease-out_0.5s_forwards]">
+          Photography Studio
         </p>
 
-        <div className="mt-12 flex gap-4 opacity-0 animate-[fadeIn_1s_ease-out_1s_forwards]">
-          <a href="#contact" className="bg-brand-accent text-black px-8 py-3 font-bold uppercase tracking-wider hover:bg-white transition-colors duration-300">
+        {/* Single CTA button */}
+        <div className="mt-10 opacity-0 animate-[fadeIn_1s_ease-out_0.8s_forwards]">
+          <a href="#contact" className="bg-white/90 text-black px-10 py-4 font-bold uppercase tracking-wider hover:bg-white transition-all duration-300 backdrop-blur-sm">
             Book Now
-          </a>
-          <a href="#gallery" className="border border-white/20 text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-white/10 transition-colors duration-300">
-            View Gallery
           </a>
         </div>
       </div>
