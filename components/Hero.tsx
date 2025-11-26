@@ -70,9 +70,9 @@ const Hero: React.FC = () => {
           Photography Studio
         </p>
 
-        {/* Single CTA button */}
+        {/* Single CTA button - High Visibility */}
         <div className="mt-10 opacity-0 animate-[fadeIn_1s_ease-out_0.8s_forwards]">
-          <a href="#contact" className="bg-white/90 text-black px-10 py-4 font-bold uppercase tracking-wider hover:bg-white transition-all duration-300 backdrop-blur-sm">
+          <a href="#contact" className="inline-block bg-brand-accent text-black px-12 py-5 font-bold uppercase tracking-wider hover:bg-white transition-all duration-300 shadow-2xl hover:shadow-brand-accent/50 hover:scale-105 transform">
             Book Now
           </a>
         </div>
