@@ -76,9 +76,9 @@ The form will now automatically send emails to `vsontakke100@gmail.com` with:
 You'll receive emails like this:
 
 ```
-Subject: New Inquiry from John Doe - Nanded Snaps Studio
+Subject: New Inquiry from John Doe - Shivrudra Events Studio
 
-From: Nanded Snaps Studio Contact Form
+From: Shivrudra Events Studio Contact Form
 
 Name: John Doe
 Email: john@example.com

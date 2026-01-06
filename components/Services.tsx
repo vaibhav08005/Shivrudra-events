@@ -1,48 +1,53 @@
 import React from 'react';
 import { Camera, Heart, Briefcase, Video } from 'lucide-react';
 import { Service } from '../types';
-
-const services: Service[] = [
-  {
-    id: 1,
-    title: 'Wedding Stories',
-    description: 'Cinematic documentation of your special day. Traditional & Candid styles.',
-    price: 'Starts ₹25,000',
-    icon: <Heart className="w-8 h-8" />,
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop'
-  },
-  {
-    id: 2,
-    title: 'Portraiture',
-    description: 'Studio and outdoor portraits that capture your true personality.',
-    price: 'Starts ₹5,000',
-    icon: <Camera className="w-8 h-8" />,
-    image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1964&auto=format&fit=crop'
-  },
-  {
-    id: 3,
-    title: 'Product & Brand',
-    description: 'High-end product photography to elevate your e-commerce business.',
-    price: 'Starts ₹8,000',
-    icon: <Briefcase className="w-8 h-8" />,
-    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop'
-  },
-  {
-    id: 4,
-    title: 'Cinematography',
-    description: '4K video production for events, music videos, and commercials.',
-    price: 'Starts ₹15,000',
-    icon: <Video className="w-8 h-8" />,
-    image: 'https://images.unsplash.com/photo-1579632652768-6cb9dcf85912?q=80&w=1976&auto=format&fit=crop'
-  }
-];
+import { useLanguage } from './LanguageContext';
+import { translations } from '../translations';
 
 const Services: React.FC = () => {
+  const { language } = useLanguage();
+  const t = translations.services;
+
+  const services: Service[] = [
+    {
+      id: 1,
+      title: t.wedding.title[language],
+      description: t.wedding.description[language],
+      price: t.wedding.price[language],
+      icon: <Heart className="w-8 h-8" />,
+      image: 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop'
+    },
+    {
+      id: 2,
+      title: t.portrait.title[language],
+      description: t.portrait.description[language],
+      price: t.portrait.price[language],
+      icon: <Camera className="w-8 h-8" />,
+      image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1964&auto=format&fit=crop'
+    },
+    {
+      id: 3,
+      title: t.product.title[language],
+      description: t.product.description[language],
+      price: t.product.price[language],
+      icon: <Briefcase className="w-8 h-8" />,
+      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop'
+    },
+    {
+      id: 4,
+      title: t.cinematography.title[language],
+      description: t.cinematography.description[language],
+      price: t.cinematography.price[language],
+      icon: <Video className="w-8 h-8" />,
+      image: 'https://images.unsplash.com/photo-1579632652768-6cb9dcf85912?q=80&w=1976&auto=format&fit=crop'
+    }
+  ];
+
   return (
     <section id="services" className="py-32 bg-brand-dark relative">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-20">
-          <h2 className="font-display text-5xl md:text-8xl uppercase text-white mb-6">Our Services</h2>
+          <h2 className="font-display text-5xl md:text-8xl uppercase text-white mb-6">{t.heading[language]}</h2>
           <div className="h-1 w-24 bg-brand-accent"></div>
         </div>
 
@@ -69,8 +74,8 @@ const Services: React.FC = () => {
                   {service.description}
                 </p>
                 <div className="flex items-center justify-between border-t border-white/10 pt-4">
-                   <span className="text-brand-accent font-bold text-sm">{service.price}</span>
-                   <span className="text-white text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Read More</span>
+                  <span className="text-brand-accent font-bold text-sm">{service.price}</span>
+                  <span className="text-white text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">{t.readMore[language]}</span>
                 </div>
               </div>
             </div>

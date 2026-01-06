@@ -1,8 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useLanguage } from './LanguageContext';
+import { translations } from '../translations';
 
 const CameraShowcase: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [rotation, setRotation] = useState(0);
+  const { language } = useLanguage();
+  const t = translations.about;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,33 +33,37 @@ const CameraShowcase: React.FC = () => {
         {/* Content Side */}
         <div className="order-2 md:order-1 relative z-10">
           <div className="overflow-hidden mb-4">
-             <h3 className="text-brand-accent font-sans text-sm uppercase tracking-widest mb-2">About The Studio</h3>
+            <h3 className="text-brand-accent font-sans text-sm uppercase tracking-widest mb-2">{t.subtitle[language]}</h3>
           </div>
           <h2 className="font-display text-5xl md:text-7xl uppercase text-white mb-8 leading-tight">
-            We Don't Just Take Photos, <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/50 to-white/10">We Capture Souls.</span>
+            {t.heading1[language]} <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/50 to-white/10">{t.heading2[language]}</span>
           </h2>
           <div className="space-y-6 text-gray-400 font-light text-lg">
             <p>
-              Located in the heart of Shivaji Nagar, Nanded, <strong className="text-white">Nanded Snaps Studio</strong> has been a cornerstone of artistic expression since 2015.
+              {language === 'en' ? (
+                <>At <strong className="text-white">Shivrudra Event Photography</strong>we don’t just click pictures — we capture soul-stirring stories. From the sparkle in your eyes on your wedding day, to the tiny miracles in newborn shoots, every moment becomes timeless art in our frame. With a creative team that listens with the heart and shoots with passion, we bring emotions to life through light & shadow.</>
+              ) : (
+                <><strong className="text-white">शिवरुद्र इव्हेंट्स स्टुडिओ</strong> मध्ये, आम्ही फक्त फोटो घेत नाही — क्षणांना जिवंत करतो. तुमच्या हास्याचा पहिला तेज, प्रेमाच्या नजरेतील नाजुक भाव, आणि आयुष्याच्या खास वळणांचे सुंदर क्षण — आमच्या कॅमेर्‍यात अमर होतात..</>
+              )}
             </p>
             <p>
-              We believe that every click of the shutter is a preservation of history. Whether it's the grandeur of a traditional Maharashtrian wedding or the subtle emotion of a portrait, our team brings a unique cinematic perspective to every assignment.
+              {t.description2[language]}
             </p>
           </div>
 
           <div className="mt-12 flex gap-8">
             <div className="text-center">
-               <span className="block font-display text-4xl text-white">500+</span>
-               <span className="text-xs uppercase tracking-widest text-gray-500">Weddings</span>
+              <span className="block font-display text-4xl text-white">500+</span>
+              <span className="text-xs uppercase tracking-widest text-gray-500">{t.stats.weddings[language]}</span>
             </div>
             <div className="text-center">
-               <span className="block font-display text-4xl text-white">8+</span>
-               <span className="text-xs uppercase tracking-widest text-gray-500">Years Exp</span>
+              <span className="block font-display text-4xl text-white">8+</span>
+              <span className="text-xs uppercase tracking-widest text-gray-500">{t.stats.years[language]}</span>
             </div>
             <div className="text-center">
-               <span className="block font-display text-4xl text-white">100%</span>
-               <span className="text-xs uppercase tracking-widest text-gray-500">Satisfaction</span>
+              <span className="block font-display text-4xl text-white">100%</span>
+              <span className="text-xs uppercase tracking-widest text-gray-500">{t.stats.satisfaction[language]}</span>
             </div>
           </div>
         </div>
@@ -83,7 +91,7 @@ const CameraShowcase: React.FC = () => {
               className="absolute -top-10 -right-10 w-40 h-40 bg-brand-accent/20 rounded-full blur-3xl"
               style={{ transform: 'translateZ(-50px)' }}
             />
-             <div
+            <div
               className="absolute bottom-10 -left-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"
               style={{ transform: 'translateZ(-50px)' }}
             />

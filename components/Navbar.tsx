@@ -1,49 +1,78 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Camera } from 'lucide-react';
+import { Menu, X, Camera, Globe } from 'lucide-react';
+import { useLanguage } from './LanguageContext';
+import { translations } from '../translations';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const { language, toggleLanguage } = useLanguage();
+  const t = translations.nav;
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      // Show navbar only when scrolled past most of the hero section
+      setIsVisible(window.scrollY > window.innerHeight - 100);
     };
+
+    // Check initially
+    handleScroll();
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Services', href: '#services' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Contact', href: '#contact' },
+    { name: t.home[language], href: '#home' },
+    { name: t.about[language], href: '#about' },
+    { name: t.services[language], href: '#services' },
+    { name: t.gallery[language], href: '#gallery' },
+    { name: t.contact[language], href: '#contact' },
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-brand-dark/90 backdrop-blur-md py-4' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isVisible
+      ? 'translate-y-0 opacity-100 bg-brand-dark/90 backdrop-blur-md py-4 shadow-lg'
+      : '-translate-y-full opacity-0 py-6 pointer-events-none'
+      }`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <a href="#home" className="flex items-center gap-2 group">
+        <a href="#home" className="flex items-center gap-3 group">
           <Camera className="w-8 h-8 text-white group-hover:text-brand-accent transition-colors" />
+          <span className="font-display text-xl font-bold uppercase tracking-tight text-white group-hover:text-brand-accent transition-colors">
+            Shiv<span className="text-brand-accent">rudra</span>
+          </span>
         </a>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <a
-              key={link.name}
+              key={link.href}
               href={link.href}
               className="text-sm font-medium uppercase tracking-widest hover:text-brand-accent transition-colors text-white/80"
             >
               {link.name}
             </a>
           ))}
+
+          {/* Language Toggle */}
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center gap-2 px-4 py-2 border border-brand-accent/50 text-xs font-bold uppercase tracking-widest text-brand-accent hover:bg-brand-accent hover:text-black transition-all duration-300 rounded-full"
+            aria-label="Toggle language"
+          >
+            <Globe size={14} />
+            <span className="relative overflow-hidden h-4 w-8">
+              <span className={`absolute inset-0 flex items-center justify-center transition-transform duration-300 ${language === 'en' ? 'translate-y-0' : '-translate-y-full'}`}>EN</span>
+              <span className={`absolute inset-0 flex items-center justify-center transition-transform duration-300 ${language === 'mr' ? 'translate-y-0' : 'translate-y-full'}`}>मरा</span>
+            </span>
+          </button>
+
           <a
             href="#contact"
-            className="px-6 py-2 border border-white/30 text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300"
+            className="px-6 py-2 border border-white/30 text-xs font-bold uppercase tracking-widest text-white hover:bg-white hover:text-black transition-all duration-300"
           >
-            Book Now
+            {t.bookNow[language]}
           </a>
         </div>
 
@@ -60,7 +89,7 @@ const Navbar: React.FC = () => {
       <div className={`fixed inset-0 bg-brand-dark z-40 flex flex-col items-center justify-center gap-8 transition-transform duration-500 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'} md:hidden`}>
         {navLinks.map((link) => (
           <a
-            key={link.name}
+            key={link.href}
             href={link.href}
             onClick={() => setIsOpen(false)}
             className="font-display text-4xl uppercase font-bold text-white hover:text-brand-accent transition-colors"
@@ -68,6 +97,16 @@ const Navbar: React.FC = () => {
             {link.name}
           </a>
         ))}
+
+        {/* Mobile Language Toggle */}
+        <button
+          onClick={toggleLanguage}
+          className="flex items-center gap-3 px-6 py-3 border-2 border-brand-accent text-lg font-bold text-brand-accent hover:bg-brand-accent hover:text-black transition-all duration-300 rounded-full mt-4"
+        >
+          <Globe size={20} />
+          {language === 'en' ? 'मराठी' : 'English'}
+        </button>
+
         <button
           onClick={() => setIsOpen(false)}
           className="absolute top-8 right-6 text-white/50 hover:text-white"

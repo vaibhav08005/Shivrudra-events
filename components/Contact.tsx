@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Phone, MapPin, Mail, Instagram, Facebook, CheckCircle, AlertCircle } from 'lucide-react';
 import { WEB3FORMS_CONFIG } from '../web3forms.config';
+import { useLanguage } from './LanguageContext';
+import { translations } from '../translations';
 
 const Contact: React.FC = () => {
   const [formState, setFormState] = useState({
@@ -13,6 +15,8 @@ const Contact: React.FC = () => {
   });
   const [submitted, setSubmitted] = useState(false);
   const [status, setStatus] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
+  const { language } = useLanguage();
+  const t = translations.contact;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +26,7 @@ const Contact: React.FC = () => {
     try {
       // Web3Forms Access Key - Get your free key at https://web3forms.com
       const accessKey = WEB3FORMS_CONFIG.accessKey;
-      
+
       // Prepare form data
       const formData = new FormData();
       formData.append('access_key', accessKey);
@@ -32,8 +36,8 @@ const Contact: React.FC = () => {
       formData.append('service', formState.service);
       formData.append('date', formState.date);
       formData.append('message', formState.message);
-      formData.append('subject', `New Inquiry from ${formState.name} - Nanded Snaps Studio`);
-      formData.append('from_name', 'Nanded Snaps Studio Contact Form');
+      formData.append('subject', `New Inquiry from ${formState.name} - Shivrudra Events Studio`);
+      formData.append('from_name', 'Shivrudra Events Studio Contact Form');
       formData.append('to_email', WEB3FORMS_CONFIG.recipientEmail);
 
       // Send to Web3Forms
@@ -43,13 +47,13 @@ const Contact: React.FC = () => {
       });
 
       const result = await response.json();
-      
+
       console.log('Web3Forms Response:', result); // Debug log
 
       if (result.success) {
-        setStatus({ 
-          type: 'success', 
-          message: 'Thanks for your inquiry! We will contact you shortly.' 
+        setStatus({
+          type: 'success',
+          message: t.success[language]
         });
         setFormState({ name: '', email: '', phone: '', service: 'Wedding Photography', date: '', message: '' });
       } else {
@@ -64,8 +68,8 @@ const Contact: React.FC = () => {
     } catch (error: any) {
       console.error('Form submission error:', error);
       const errorMessage = error?.message || 'Failed to send inquiry. Please try again or contact us directly.';
-      setStatus({ 
-        type: 'error', 
+      setStatus({
+        type: 'error',
         message: errorMessage
       });
     } finally {
@@ -85,10 +89,10 @@ const Contact: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
         <div>
           <h2 className="font-display text-5xl md:text-7xl uppercase text-white mb-8">
-            Let's Create <br /> <span className="text-brand-accent">History</span>
+            {t.heading[language]} <br /> <span className="text-brand-accent">{t.headingHighlight[language]}</span>
           </h2>
           <p className="text-gray-400 mb-12 max-w-md">
-            Ready to book your session or have a question? Fill out the form or visit our studio in Shivaji Nagar.
+            {t.description[language]}
           </p>
 
           <div className="space-y-8">
@@ -97,8 +101,8 @@ const Contact: React.FC = () => {
                 <MapPin className="text-brand-accent" />
               </div>
               <div>
-                <h4 className="text-white font-bold uppercase mb-1">Visit Us</h4>
-                <p className="text-gray-400">Shivaji Nagar, Nanded,<br />Maharashtra 431602, India</p>
+                <h4 className="text-white font-bold uppercase mb-1">{t.visitUs[language]}</h4>
+                <p className="text-gray-400">Ravi Nagar T Point,Om Garden Road, Vazirabad<br /> Nanded-431601, Maharashtra</p>
               </div>
             </div>
 
@@ -107,9 +111,9 @@ const Contact: React.FC = () => {
                 <Phone className="text-brand-accent" />
               </div>
               <div>
-                <h4 className="text-white font-bold uppercase mb-1">Call Us</h4>
-                <p className="text-gray-400">+91 93737 68026</p>
-                <p className="text-gray-500 text-sm">Mon - Sat: 10AM - 7PM</p>
+                <h4 className="text-white font-bold uppercase mb-1">{t.callUs[language]}</h4>
+                <p className="text-gray-400">+91 8123859148</p>
+                <p className="text-gray-500 text-sm">{t.timing[language]}</p>
               </div>
             </div>
 
@@ -118,8 +122,8 @@ const Contact: React.FC = () => {
                 <Mail className="text-brand-accent" />
               </div>
               <div>
-                <h4 className="text-white font-bold uppercase mb-1">Email</h4>
-                <p className="text-gray-400">vsontakke100@gmail.com</p>
+                <h4 className="text-white font-bold uppercase mb-1">{t.email[language]}</h4>
+                <p className="text-gray-400">shivrudra.events@gmail.com</p>
               </div>
             </div>
           </div>
@@ -138,71 +142,71 @@ const Contact: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-gray-500">Name</label>
+                <label className="text-xs uppercase tracking-widest text-gray-500">{t.form.name[language]}</label>
                 <input
                   type="text"
                   required
                   className="w-full bg-black/30 border border-white/10 p-3 text-white focus:outline-none focus:border-brand-accent transition-colors"
                   value={formState.name}
-                  onChange={e => setFormState({...formState, name: e.target.value})}
+                  onChange={e => setFormState({ ...formState, name: e.target.value })}
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-gray-500">Phone</label>
+                <label className="text-xs uppercase tracking-widest text-gray-500">{t.form.phone[language]}</label>
                 <input
                   type="tel"
                   required
                   className="w-full bg-black/30 border border-white/10 p-3 text-white focus:outline-none focus:border-brand-accent transition-colors"
                   value={formState.phone}
-                  onChange={e => setFormState({...formState, phone: e.target.value})}
+                  onChange={e => setFormState({ ...formState, phone: e.target.value })}
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest text-gray-500">Email</label>
+              <label className="text-xs uppercase tracking-widest text-gray-500">{t.form.email[language]}</label>
               <input
                 type="email"
                 required
                 className="w-full bg-black/30 border border-white/10 p-3 text-white focus:outline-none focus:border-brand-accent transition-colors"
                 value={formState.email}
-                onChange={e => setFormState({...formState, email: e.target.value})}
+                onChange={e => setFormState({ ...formState, email: e.target.value })}
               />
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-gray-500">Service Type</label>
+                <label className="text-xs uppercase tracking-widest text-gray-500">{t.form.serviceType[language]}</label>
                 <select
                   className="w-full bg-black/30 border border-white/10 p-3 text-white focus:outline-none focus:border-brand-accent transition-colors"
                   value={formState.service}
-                  onChange={e => setFormState({...formState, service: e.target.value})}
+                  onChange={e => setFormState({ ...formState, service: e.target.value })}
                 >
-                  <option>Wedding Photography</option>
-                  <option>Portrait Shoot</option>
-                  <option>Event Coverage</option>
-                  <option>Birthday shoot</option>
-                  <option>Other</option>
+                  <option value="Wedding Photography">{t.form.services.wedding[language]}</option>
+                  <option value="Portrait Shoot">{t.form.services.portrait[language]}</option>
+                  <option value="Event Coverage">{t.form.services.event[language]}</option>
+                  <option value="Birthday shoot">{t.form.services.birthday[language]}</option>
+                  <option value="Other">{t.form.services.other[language]}</option>
                 </select>
               </div>
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-gray-500">Preferred Date</label>
+                <label className="text-xs uppercase tracking-widest text-gray-500">{t.form.preferredDate[language]}</label>
                 <input
                   type="date"
                   className="w-full bg-black/30 border border-white/10 p-3 text-white focus:outline-none focus:border-brand-accent transition-colors"
                   value={formState.date}
-                  onChange={e => setFormState({...formState, date: e.target.value})}
+                  onChange={e => setFormState({ ...formState, date: e.target.value })}
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest text-gray-500">Message</label>
+              <label className="text-xs uppercase tracking-widest text-gray-500">{t.form.message[language]}</label>
               <textarea
                 rows={4}
                 className="w-full bg-black/30 border border-white/10 p-3 text-white focus:outline-none focus:border-brand-accent transition-colors"
                 value={formState.message}
-                onChange={e => setFormState({...formState, message: e.target.value})}
+                onChange={e => setFormState({ ...formState, message: e.target.value })}
               ></textarea>
             </div>
 
@@ -211,16 +215,15 @@ const Contact: React.FC = () => {
               disabled={submitted}
               className="w-full bg-brand-accent text-black font-bold uppercase tracking-widest py-4 hover:bg-white transition-colors duration-300 disabled:opacity-50"
             >
-              {submitted ? 'Sending...' : 'Send Inquiry'}
+              {submitted ? t.form.sending[language] : t.form.send[language]}
             </button>
 
             {/* Status Message */}
             {status.type && (
-              <div className={`flex items-center gap-3 p-4 rounded ${
-                status.type === 'success' 
-                  ? 'bg-green-500/10 border border-green-500/30 text-green-400' 
-                  : 'bg-red-500/10 border border-red-500/30 text-red-400'
-              }`}>
+              <div className={`flex items-center gap-3 p-4 rounded ${status.type === 'success'
+                ? 'bg-green-500/10 border border-green-500/30 text-green-400'
+                : 'bg-red-500/10 border border-red-500/30 text-red-400'
+                }`}>
                 {status.type === 'success' ? (
                   <CheckCircle className="w-5 h-5 flex-shrink-0" />
                 ) : (
@@ -243,7 +246,7 @@ const Contact: React.FC = () => {
           allowFullScreen={true}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          title="Nanded Snaps Studio Location"
+          title="Shivrudra Events Studio Location"
         ></iframe>
       </div>
     </section>

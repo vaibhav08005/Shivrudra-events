@@ -1,4 +1,4 @@
-# 📸 Nanded Snaps Studio
+# 📸 Shivrudra Events Studio
 
 A modern, professional photography studio website built with React, TypeScript, and Vite. Features a stunning hero video, interactive gallery, and smooth animations.
 

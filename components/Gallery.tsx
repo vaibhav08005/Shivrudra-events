@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { X, ZoomIn, Play } from 'lucide-react';
 import { GalleryItem } from '../types';
+import { useLanguage } from './LanguageContext';
+import { translations } from '../translations';
 
 const galleryItems: GalleryItem[] = [
-  { id: 1, src: 'https://images.unsplash.com/photo-1511285560982-1351cdeb9821?q=80&w=1000', category: 'Wedding', alt: 'Wedding Couple' },
+  // { id: 1, src: 'https://images.unsplash.com/photo-1511285560982-1351cdeb9821?q=80&w=1000', category: 'Wedding', alt: 'Wedding Couple' },
   { id: 2, src: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000', category: 'Portrait', alt: 'Model Portrait' },
   { id: 3, src: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1000', category: 'Event', alt: 'Concert' },
-  { id: 4, src: 'https://images.unsplash.com/photo-1519225421980-715cb0202128?q=80&w=1000', category: 'Wedding', alt: 'Traditional Wedding' },
-  { id: 5, src: 'https://images.unsplash.com/photo-1471341971474-273d38152771?q=80&w=1000', category: 'Nature', alt: 'Landscape' },
+  // { id: 4, src: 'https://images.unsplash.com/photo-1519225421980-715cb0202128?q=80&w=1000', category: 'Wedding', alt: 'Traditional Wedding' },
+  // { id: 5, src: 'https://images.unsplash.com/photo-1471341971474-273d38152771?q=80&w=1000', category: 'Nature', alt: 'Landscape' },
   { id: 6, src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000', category: 'Portrait', alt: 'Woman Smile' },
   // Additional gallery items
   { id: 7, src: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1000', category: 'Wedding', alt: 'Bride and Groom' },
@@ -27,23 +29,31 @@ const galleryItems: GalleryItem[] = [
 const Gallery: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const { language } = useLanguage();
+  const t = translations.gallery;
 
   // Show only first 6 items initially, or all if showAll is true
   const displayedItems = showAll ? galleryItems : galleryItems.slice(0, 6);
+
+  // Get translated category
+  const getCategory = (category: string) => {
+    const categoryKey = category as keyof typeof t.categories;
+    return t.categories[categoryKey]?.[language] || category;
+  };
 
   return (
     <section id="gallery" className="py-32 bg-black relative">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <div>
-            <h2 className="font-display text-5xl md:text-8xl uppercase text-white mb-2">Featured Work</h2>
-            <p className="text-gray-500 uppercase tracking-widest">Selected shots from our portfolio</p>
+            <h2 className="font-display text-5xl md:text-8xl uppercase text-white mb-2">{t.heading[language]}</h2>
+            <p className="text-gray-500 uppercase tracking-widest">{t.subtitle[language]}</p>
           </div>
-          <button 
+          <button
             onClick={() => setShowAll(!showAll)}
             className="hidden md:block border border-white/20 text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-white hover:text-black transition-all"
           >
-            {showAll ? 'Show Less' : 'View All Work'}
+            {showAll ? t.showLess[language] : t.viewAll[language]}
           </button>
         </div>
 
@@ -63,7 +73,7 @@ const Gallery: React.FC = () => {
               />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <div className="text-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  <p className="text-brand-accent uppercase tracking-widest text-xs mb-2">{item.category}</p>
+                  <p className="text-brand-accent uppercase tracking-widest text-xs mb-2">{getCategory(item.category)}</p>
                   <p className="text-white font-display text-2xl uppercase">{item.alt}</p>
                   <ZoomIn className="mx-auto mt-4 text-white/70" />
                 </div>
@@ -73,11 +83,11 @@ const Gallery: React.FC = () => {
         </div>
 
         <div className="mt-12 text-center md:hidden">
-          <button 
+          <button
             onClick={() => setShowAll(!showAll)}
             className="border border-white/20 text-white px-8 py-3 font-bold uppercase tracking-wider hover:bg-white hover:text-black transition-all"
           >
-            {showAll ? 'Show Less' : 'View All Work'}
+            {showAll ? t.showLess[language] : t.viewAll[language]}
           </button>
         </div>
       </div>
@@ -98,7 +108,7 @@ const Gallery: React.FC = () => {
           />
           <div className="absolute bottom-6 left-6 text-white">
             <p className="font-display text-2xl uppercase">{selectedImage.alt}</p>
-            <p className="text-brand-accent text-sm uppercase tracking-widest">{selectedImage.category}</p>
+            <p className="text-brand-accent text-sm uppercase tracking-widest">{getCategory(selectedImage.category)}</p>
           </div>
         </div>
       )}
