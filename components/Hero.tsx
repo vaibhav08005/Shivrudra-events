@@ -33,7 +33,7 @@ const Hero: React.FC = () => {
           }}
           poster="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2071&auto=format&fit=crop"
         >
-          <source src="/hero_video.mp4" type="video/mp4" />
+          <source src={`${import.meta.env.BASE_URL}hero_video.mp4`} type="video/mp4" />
           {/* If video fails to load, fallback image will show via poster */}
         </video>
       </div>
@@ -44,7 +44,7 @@ const Hero: React.FC = () => {
       {/* Top-Left Brand Logo Image */}
       <div className="absolute top-8 left-8 z-20 opacity-0 animate-[fadeIn_1.2s_ease-out_forwards]">
         <img
-          src="/images/hero_logo_transparent.png"
+          src={`${import.meta.env.BASE_URL}images/hero_logo_transparent.png`}
           alt="Shivrudra Events"
           className="w-16 md:w-20 lg:w-24 object-contain drop-shadow-2xl"
         />
