@@ -42,11 +42,11 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30 z-[1]" />
 
       {/* Top-Left Brand Logo Image */}
-      <div className="absolute top-8 left-8 z-20 opacity-0 animate-[fadeIn_1.2s_ease-out_forwards]">
+      <div className="absolute top-3 left-3 z-20 opacity-0 animate-[fadeIn_1.2s_ease-out_forwards]">
         <img
           src={`${import.meta.env.BASE_URL}images/hero_logo_transparent.png`}
           alt="Shivrudra Events"
-          className="w-16 md:w-20 lg:w-24 object-contain drop-shadow-2xl"
+          className="w-20 md:w-24 lg:w-24 object-contain drop-shadow-2xl"
         />
       </div>
 

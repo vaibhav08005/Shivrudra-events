@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
 
         {/* Large Brand Name */}
         <div className="border-t border-white/5 pt-12 overflow-hidden">
-          <h1 className="font-display text-[15vw] font-black text-center uppercase leading-[0.8] tracking-tighter bg-gradient-to-b from-brand-accent to-[#8a6d1a] bg-clip-text text-transparent opacity-90">
+          <h1 className="font-display text-[12vw] font-black text-center uppercase leading-[0.8] tracking-tighter bg-gradient-to-b from-brand-accent to-[#8a6d1a] bg-clip-text text-transparent opacity-90">
             SHIVRUDRA
           </h1>
         </div>
